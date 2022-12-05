@@ -2,6 +2,7 @@ import { useGetPostsQuery } from "../services/posts";
 import React from "react";
 import { useSelector } from "react-redux";
 import LoadingMoreTitlesButton from "../components/LoadingMoreTitlesButton";
+import TitleCard from "../components/TitleCard";
 
 export default function Home() {
   const currentNumberOfTitleLoaded = useSelector(
@@ -20,7 +21,9 @@ export default function Home() {
           data.slice(0, currentNumberOfTitleLoaded).map((post) => {
             return (
               <>
-                <li key={post.id}>{post.title}</li>
+                <li key={post.id}>
+                  <TitleCard titleDetails={post} />
+                </li>
               </>
             );
           })}
