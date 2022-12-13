@@ -1,32 +1,27 @@
 import React from "react";
 import { Icon } from "@iconify/react";
-import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { toggleLikeButton } from "../features/toggleLikeButtonSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleLikeButton } from "../features/loadMoreRestaurantsSlice";
 
-export default function LikeButton({ postId }) {
+export default function LikeButton({ restaurantsId }) {
   const dispatch = useDispatch();
   const likeStatus = useSelector(
-    (state) => state.toggleLike.statusListOfLikes[postId]
+    (state) => state.toggleLike.statusListOfLikes[restaurantsId]
   );
 
   return (
-    <StyledButton
+    <button
       aria-label={`click to ${likeStatus ? "unlike" : "like"}`}
-      onClick={() => dispatch(toggleLikeButton(postId))}
+      onClick={() => dispatch(toggleLikeButton(restaurantsId))}
     >
       <StyledButtonIcon
         icon="akar-icons:heart"
         color={`${likeStatus ? "red" : "black"}`}
       />
-    </StyledButton>
+    </button>
   );
 }
-
-const StyledButton = styled.button`
-  background: none;
-  border: none;
-`;
 
 const StyledButtonIcon = styled(Icon)`
   height: 30px;

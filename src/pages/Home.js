@@ -1,34 +1,40 @@
-import { useGetPostsQuery } from "../services/posts";
 import React from "react";
+import { useGetRestaurantsQuery } from "../services/restaurants";
+import LoadMoreRestaurantsButton from "../components/LoadMoreRestaurantsButton";
 import { useSelector } from "react-redux";
-import LoadingMoreTitlesButton from "../components/LoadingMoreTitlesButton";
-import TitleCard from "../components/TitleCard";
+import LocationCard from "../components/LocationCard";
 
 export default function Home() {
-  const currentNumberOfTitleLoaded = useSelector(
-    (state) => state.loadMoreTitles.value
+  const currentNumberOfRestaurantsLoaded = useSelector(
+    (state) => state.loadMoreRestaurants.value
   );
-  const { data, error, isLoading, isSuccess, isError } = useGetPostsQuery();
+
+  const {
+    data,
+    error,
+    isLoading,
+    isSuccess,
+    isError,
+  } = useGetRestaurantsQuery();
 
   return (
-    <main>
+    <div>
       <ul>
-        <h1>Welcome to React </h1>
-        {isLoading && "...Loading"}
+        <h1>Restaurants</h1>
+
+        {isLoading && "...Loading..."}
         {isError && error.message}
         {isSuccess &&
           data &&
-          data.slice(0, currentNumberOfTitleLoaded).map((post) => {
+          data.slice(0, currentNumberOfRestaurantsLoaded).map((restaurant) => {
             return (
-              <>
-                <li key={post.id}>
-                  <TitleCard titleDetails={post} />
-                </li>
-              </>
+              <li key={restaurant.id}>
+                <LocationCard restaurantsDetails={restaurant} />
+              </li>
             );
           })}
       </ul>
-      <LoadingMoreTitlesButton />
-    </main>
+      <LoadMoreRestaurantsButton />
+    </div>
   );
 }
